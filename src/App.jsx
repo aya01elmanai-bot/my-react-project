@@ -1,73 +1,90 @@
-const courseTitle = "Advanced Web Development";
-
-const studentName = "Eya Elmanai";
-
-function sayHello() {
-  return "Hello, " + studentName + "!";
-}
+const stories = [
+  {
+    objectID: "1",
+    title: "React is the future of web development",
+    url: "https://reactjs.org",
+    author: "Eya Elmanai",
+    points: 245,
+    num_comments: 43,
+  },
+  {
+    objectID: "2",
+    title: "Understanding JavaScript closures deeply",
+    url: "https://developer.mozilla.org",
+    author: "John Smith",
+    points: 178,
+    num_comments: 31,
+  },
+  {
+    objectID: "3",
+    title: "Vite is replacing Create React App",
+    url: "https://vitejs.dev",
+    author: "Sara Dev",
+    points: 312,
+    num_comments: 67,
+  },
+];
 
 function App() {
-  const student = {
-    name: "Eya Elmanai",
-    age: 20,
-    track: "Web Development",
-  };
+  console.log(stories[0]);
 
   return (
     <div>
-      <h1>first trial</h1>
-      <p>{studentName}</p>
-      <h2>Step 1</h2>
-      <p>Q: Why must React components start with a capital letter?</p>
-      <p>A: React uses the capital letter to tell components apart from regular HTML tags. A lowercase tag like div is HTML, but App is a React component.</p>
-      <p>Q: What error do you get if you return two sibling elements?</p>
-      <p>A: You get a parse error saying adjacent JSX elements must be wrapped in an enclosing tag.</p>
+      <h1>Hacker News Stories</h1>
 
-      <h2>Step 2</h2>
-      <p>{studentName}</p>
-      <p>Q: What happens if you remove the curly braces around the variable?</p>
-      <p>A: JSX treats it as plain text and prints the word studentName instead of the value.</p>
-      <p>Q: Can JSX read JavaScript directly without curly braces?</p>
-      <p>A: No, curly braces are required to embed any JavaScript expression in JSX.</p>
+      <h2>Warm-up</h2>
+      <p>Q: What kind of content does Hacker News display?</p>
+      <p>A: Hacker News displays technology news, programming articles, startup stories, and science content submitted by users.</p>
+      <p>Q: What information do you usually see for each post?</p>
+      <p>A: For each post you usually see a title, a link, the author name, a points score, and the number of comments.</p>
 
-      <h2>Step 3</h2>
-      <p>{courseTitle}</p>
-      <p>Q: Why is courseTitle accessible inside the component even though it is defined outside?</p>
-      <p>A: Because of JavaScript scope rules — inner scopes can access variables from outer scopes.</p>
-      <p>Q: When might this be a bad idea in a real application?</p>
-      <p>A: When multiple components share and modify the same variable, it leads to unpredictable bugs.</p>
+      <h2>Step 1 - Data Structure</h2>
+      <p>Q: Which property should be used as the React key?</p>
+      <p>A: objectID should be used as the React key because it is unique for every story.</p>
+      <p>Q: Why is this structure realistic for an API?</p>
+      <p>A: Because it mirrors the actual Hacker News API response format, making it easy to switch from fake data to real data later.</p>
 
-      <h2>Step 4</h2>
-      <p>Welcome to {courseTitle}, {studentName}!</p>
-      <p>Q: What type of expression is allowed inside curly braces?</p>
-      <p>A: Any valid JavaScript expression such as variables, function calls, math, and ternary operators. Statements like if or for are not allowed.</p>
+      <h2>Step 2 - Data Outside Component</h2>
+      <p>Q: Why do we define this data outside the component for now?</p>
+      <p>A: Because it does not change and does not depend on the component lifecycle. It is static data that all components can access.</p>
+      <p>Q: What will change when data comes from the API later?</p>
+      <p>A: We will fetch data using useEffect and store it with useState inside the component, so it updates when the API responds.</p>
 
-      <h2>Step 5</h2>
-      <p>Q: Why does React use htmlFor instead of for?</p>
-      <p>A: Because for is a reserved keyword in JavaScript, so JSX uses htmlFor to avoid conflicts.</p>
-      <label htmlFor="name">Enter your name:</label>
-      <input type="text" id="name" />
+      <h2>Step 3 - Rendering with map()</h2>
+      <p>Q: What does map() return?</p>
+      <p>A: map() returns a new array of JSX elements, one for each item in the original array.</p>
+      <p>Q: Why is map() preferred over forEach() in React rendering?</p>
+      <p>A: Because map() returns a new array that React can render, while forEach() returns nothing.</p>
 
-      <h2>Step 6</h2>
-      <p>Q: Can React render an object directly? Why does rendering the whole object cause an error?</p>
-      <p>A: No. React cannot render objects directly. It throws an error saying objects are not valid as a React child. You must access individual properties.</p>
-      <p>{student.name}</p>
-      <p>{student.age}</p>
-      <p>{student.track}</p>
+      {stories.map((story) => (
+        <div key={story.objectID}>
+          <h3>
+            <a href={story.url} target="_blank" rel="noreferrer">
+              {story.title}
+            </a>
+          </h3>
+          <p>Author: <span>{story.author}</span></p>
+          <p>Points: <span>{story.points}</span></p>
+          <p>Comments: <span>{story.num_comments}</span></p>
+        </div>
+      ))}
 
-      <h2>Step 7</h2>
-      <p>Q: What is the difference between sayHello and sayHello()?</p>
-      <p>A: sayHello without parentheses is just a reference to the function and renders nothing. sayHello() calls the function and renders its returned value.</p>
-      <p>{sayHello()}</p>
+      <h2>Step 4 - Display Content</h2>
+      <p>Q: What happens if url is missing?</p>
+      <p>A: The link would have no href and clicking it would do nothing or navigate to the current page.</p>
+      <p>Q: Should links open in a new tab?</p>
+      <p>A: Yes, using target="_blank" so users do not leave the app while reading a story.</p>
 
-      <h2>Step 8 - Reflection</h2>
-      <p>1. One thing I understand well: how JSX uses curly braces to embed JavaScript expressions inside HTML-like code.</p>
-      <p>2. One thing still confusing: deciding when a variable should live inside versus outside a component.</p>
-      <p>3. One mistake I made and fixed: I tried rendering the whole student object directly and got an error, then fixed it by accessing each property individually.</p>
+      <h2>Step 5 - React Keys</h2>
+      <p>Q: Why is objectID a better key than the index?</p>
+      <p>A: Because objectID is stable and unique. The array index changes when items are added or removed, causing React to re-render incorrectly.</p>
+      <p>Q: What problem does React solve using keys?</p>
+      <p>A: Keys help React identify which items changed, were added, or removed, making list re-rendering efficient and correct.</p>
 
-      <h2>Step 9</h2>
-      <p>Q: Why are small descriptive commits important?</p>
-      <p>A: They make it easy to track changes, understand project history, revert specific updates, and collaborate with others effectively.</p>
+      <h2>Reflection</h2>
+      <p>1. map() is essential because it transforms each data item into a JSX element and returns an array React can render directly.</p>
+      <p>2. objectID is the correct key because it is unique and stable, unlike the array index which shifts when data changes.</p>
+      <p>3. When we replace fake data with the Hacker News API, we will fetch data using useEffect, store it with useState, and the component will re-render automatically when the data arrives.</p>
     </div>
   );
 }
